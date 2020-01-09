@@ -9,7 +9,7 @@ RUN sudo apt-get update && sudo apt-get install -yq build-essential openssl libr
   git libpq-dev apt-transport-https\
   libmagickcore-6.q16-3 imagemagick libmagickcore-dev libmagickwand-dev \
   libjemalloc-dev cmake\
-  google-chrome-stable=74.\* --no-install-recommends
+  google-chrome-stable=79.\* --no-install-recommends
 
 RUN cd /tmp && wget https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.5.3.tar.gz && tar -xvzf ruby-2.5.3.tar.gz && cd ruby-2.5.3 && ./configure --with-jemalloc && make && sudo make install
 RUN cd /tmp && wget https://nodejs.org/dist/v6.11.5/node-v6.11.5-linux-x64.tar.gz && sudo tar -xf node-v6.11.5-linux-x64.tar.gz --directory /usr/local --strip-components 1
@@ -36,5 +36,5 @@ RUN sudo gem install pronto \
 RUN sudo yarn global add node-gyp
 RUN sudo npm install -g gulp
 
-RUN cd /tmp && wget https://chromedriver.storage.googleapis.com/74.0.3729.6/chromedriver_linux64.zip && unzip chromedriver_linux64.zip && sudo mv chromedriver /usr/local/bin/
+RUN cd /tmp && wget https://chromedriver.storage.googleapis.com/79.0.3945.36/chromedriver_linux64.zip && unzip chromedriver_linux64.zip && sudo mv chromedriver /usr/local/bin/
 RUN sudo apt-get clean && sudo apt-get autoremove
