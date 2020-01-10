@@ -1,4 +1,4 @@
-FROM circleci/ruby:2.5.3-stretch-browsers
+FROM circleci/ruby:2.5.7-stretch-browsers
 
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - &&\
   sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
@@ -11,7 +11,7 @@ RUN sudo apt-get update && sudo apt-get install -yq build-essential openssl libr
   libjemalloc-dev cmake\
   google-chrome-stable=79.\* --no-install-recommends
 
-RUN cd /tmp && wget https://cache.ruby-lang.org/pub/ruby/2.5/ruby-2.5.3.tar.gz && tar -xvzf ruby-2.5.3.tar.gz && cd ruby-2.5.3 && ./configure --with-jemalloc && make && sudo make install
+RUN cd /tmp && wget https://cache.ruby-lang.org/pub/ruby/2.5/ruby-2.5.7.tar.gz && tar -xvzf ruby-2.5.7.tar.gz && cd ruby-2.5.7 && ./configure --with-jemalloc && make && sudo make install
 RUN cd /tmp && wget https://nodejs.org/dist/v6.11.5/node-v6.11.5-linux-x64.tar.gz && sudo tar -xf node-v6.11.5-linux-x64.tar.gz --directory /usr/local --strip-components 1
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - && echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
