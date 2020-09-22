@@ -23,14 +23,22 @@ RUN cd /tmp &&\
   sudo mv cc-test-reporter /usr/local/bin/ &&\
   sudo chmod +x /usr/local/bin/cc-test-reporter
 
-RUN sudo gem install pronto \
-  pronto-rubocop \
-  pronto-reek \
-  pronto-rails_best_practices \
-  pronto-haml \
-  pronto-fasterer \
-  specific_install && \
-  sudo gem specific_install https://github.com/TINYhr/pronto-brakeman
+# Set env variables
+ENV BUNDLER_VERSION=2.1.4 \
+    RAILS_VERSION=5.1.7
+
+# Install pronto gems
+RUN sudo rm -rf /usr/local/bin/bundle \
+    && sudo gem install bundler:${BUNDLER_VERSION} activesupport:${RAILS_VERSION} \
+    && sudo gem install --conservative --minimal-deps \
+       rubocop:0.81.0 rubocop-performance rubocop-rails rubocop-rspec \
+       pronto pronto-rubocop pronto-rails_best_practices pronto-haml pronto-fasterer pronto-brakeman \
+    && cd /tmp \
+      && git clone https://github.com/anvox/pronto-reek \
+      && cd pronto-reek \
+      && git checkout v0.10.1-reek6 \
+      && bundle && rake build \
+      && gem install pkg/pronto-reek-0.10.1.pre.reek6.gem
 
 # workaround for node-gyp https://github.com/yarnpkg/yarn/issues/2828
 # RUN sudo yarn global add node-gyp
@@ -38,4 +46,8 @@ RUN sudo npm install -g node-gyp
 RUN sudo npm install -g gulp
 
 RUN cd /tmp && wget https://chromedriver.storage.googleapis.com/85.0.4183.38/chromedriver_linux64.zip && unzip chromedriver_linux64.zip && sudo mv chromedriver /usr/local/bin/
-RUN sudo apt-get clean && sudo apt-get autoremove
+#
+# Cleanup
+RUN sudo rm -rf /usr/local/lib/ruby/gems/${RUBY_MAJOR}.0/cache/* \
+    && sudo apt-get clean \
+    && sudo apt-get autoremove
