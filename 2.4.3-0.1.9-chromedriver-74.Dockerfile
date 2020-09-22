@@ -1,4 +1,4 @@
-FROM circleci/ruby:2.5.7-stretch-browsers
+FROM circleci/ruby:2.6.6-stretch-browsers
 
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - &&\
   sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
@@ -9,9 +9,9 @@ RUN sudo apt-get update && sudo apt-get install -yq build-essential openssl libr
   git libpq-dev apt-transport-https\
   libmagickcore-6.q16-3 imagemagick libmagickcore-dev libmagickwand-dev \
   libjemalloc-dev cmake\
-  google-chrome-stable=79.\* --no-install-recommends
+  google-chrome-stable=86.\* --no-install-recommends
 
-RUN cd /tmp && wget https://cache.ruby-lang.org/pub/ruby/2.5/ruby-2.5.7.tar.gz && tar -xvzf ruby-2.5.7.tar.gz && cd ruby-2.5.7 && ./configure --with-jemalloc && make && sudo make install
+RUN cd /tmp && wget https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.6.tar.gz && tar -xvzf ruby-2.6.6.tar.gz && cd ruby-2.6.6 && ./configure --with-jemalloc && make && sudo make install
 RUN cd /tmp && wget https://nodejs.org/dist/v6.11.5/node-v6.11.5-linux-x64.tar.gz && sudo tar -xf node-v6.11.5-linux-x64.tar.gz --directory /usr/local --strip-components 1
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - && echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
@@ -36,5 +36,5 @@ RUN sudo gem install pronto \
 RUN sudo yarn global add node-gyp
 RUN sudo npm install -g gulp
 
-RUN cd /tmp && wget https://chromedriver.storage.googleapis.com/79.0.3945.36/chromedriver_linux64.zip && unzip chromedriver_linux64.zip && sudo mv chromedriver /usr/local/bin/
+RUN cd /tmp && wget https://chromedriver.storage.googleapis.com/86.0.4240.22/chromedriver_linux64.zip && unzip chromedriver_linux64.zip && sudo mv chromedriver /usr/local/bin/
 RUN sudo apt-get clean && sudo apt-get autoremove
