@@ -33,8 +33,9 @@ RUN sudo gem install pronto \
   sudo gem specific_install https://github.com/TINYhr/pronto-brakeman
 
 # workaround for node-gyp https://github.com/yarnpkg/yarn/issues/2828
-RUN sudo yarn global add node-gyp
+# RUN sudo yarn global add node-gyp
+RUN sudo npm install -g node-gyp
 RUN sudo npm install -g gulp
 
-RUN cd /tmp && wget https://chromedriver.storage.googleapis.com/85.0.4183.121/chromedriver_linux64.zip && unzip chromedriver_linux64.zip && sudo mv chromedriver /usr/local/bin/
+RUN cd /tmp && wget https://chromedriver.storage.googleapis.com/85.0.4183.38/chromedriver_linux64.zip && unzip chromedriver_linux64.zip && sudo mv chromedriver /usr/local/bin/
 RUN sudo apt-get clean && sudo apt-get autoremove
